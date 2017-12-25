@@ -3,6 +3,9 @@ var coinsecure = "https://api.coinsecure.in/v1/exchange/ticker";
 var coinDelta = "https://coindelta.com/api/v1/public/getticker/";
 var proxyUrl = 'https://cors-anywhere.herokuapp.com/' //CORS Enabled Proxy
 
+var date = new Date();
+document.getElementById('date').innerHTML = date;
+
 const currencyComma = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
@@ -22,8 +25,8 @@ fetch(proxyUrl + coinsecure, {method: 'get'})
 .then((res) => res.json())
 .then((response) =>{
     console.log(response)
-    buy = currencyComma(response.message.bid/100);
-    sell = currencyComma(response.message.ask/100);
+    buy = currencyComma(response.message.ask/100);
+    sell = currencyComma(response.message.bid/100);
     document.getElementById('coinsecure').innerHTML = priceDisplay(buy,sell);           
 })
 
@@ -41,7 +44,7 @@ fetch(zebpay, {method: 'get'})
 fetch(coinDelta, {method: 'get'})
 .then((res) => res.json())
 .then((response) =>{
-    buy = currencyComma(response[0].Bid);
-    sell = currencyComma(response[0].Ask);
+    buy = currencyComma(response[0].Ask);
+    sell = currencyComma(parseInt(response[0].Bid));
     document.getElementById('coinDelta').innerHTML = priceDisplay(buy,sell);           
 });
